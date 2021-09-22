@@ -1,4 +1,5 @@
-﻿@{
+﻿@model IEnumerable<GroupViewModel>
+@{
     Layout = null;
 }
 
@@ -10,7 +11,10 @@
 </head>
 <body>
 <div>
-      Groups again!
+      @foreach (var group in Model)
+      {
+          <li>@group.Name</li>
+      }
 </div>
 </body>
 </html>
