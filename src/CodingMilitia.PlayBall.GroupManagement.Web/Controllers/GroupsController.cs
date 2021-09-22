@@ -9,7 +9,7 @@ namespace CodingMilitia.PlayBall.GroupManagement.Web.Controllers
         [Route("")] //not needed because Index would be used as default anyway
         public IActionResult Index()
         {
-            return Content("groups");
+            return View();
         }
     }
 }
