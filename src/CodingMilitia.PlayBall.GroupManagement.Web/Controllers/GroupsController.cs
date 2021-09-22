@@ -34,5 +34,18 @@ namespace CodingMilitia.PlayBall.GroupManagement.Web.Controllers
             }
             return View(group);
         }
+        [HttpPost]
+        [Route("{id}")]
+        [ValidateAntiForgeryToken]
+        public IActionResult Edit(long id, GroupViewModel model)
+        {
+            var group = groups.SingleOrDefault(g => g.Id == id);
+            if (group == null)
+            {
+                return NotFound();
+            }
+            group.Name = model.Name;
+            return RedirectToAction("Index");
+        }
     }
 }

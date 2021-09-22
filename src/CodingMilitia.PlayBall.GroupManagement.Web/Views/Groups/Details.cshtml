@@ -11,8 +11,10 @@
     <title>Details</title>
 </head>
 <body>
-<div>
-    @Model.Name
-</div>
+<form asp-controller="Groups" asp-action="Edit" asp-route-id="@Model.Id" method="post">
+    <label asp-for="Name">Name</label>
+    <input asp-for="Name" type="text" />
+    <button type="submit">Save</button>
+</form>
 </body>
 </html>
