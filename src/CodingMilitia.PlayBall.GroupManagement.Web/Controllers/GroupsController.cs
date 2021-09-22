@@ -9,7 +9,7 @@ namespace CodingMilitia.PlayBall.GroupManagement.Web.Controllers
     public class GroupsController : Controller
     {
 
-        private static long currentGroupId = 1;
+        private static long currentGroupId = 2;
         private static List<GroupViewModel> groups = new List<GroupViewModel>
         {
             new GroupViewModel { Id = 1, Name = "Sample Group N1" },
@@ -45,6 +45,22 @@ namespace CodingMilitia.PlayBall.GroupManagement.Web.Controllers
                 return NotFound();
             }
             group.Name = model.Name;
+            return RedirectToAction("Index");
+        }
+        [HttpGet]
+        [Route("create")]
+        public IActionResult Create()
+        {
+            return View();
+        }
+        [HttpPost]
+        [Route("create")]
+        [ValidateAntiForgeryToken]
+        public IActionResult Create(GroupViewModel model)
+        {
+            model.Id = ++currentGroupId;
+            groups.Add(model);
+            
             return RedirectToAction("Index");
         }
     }

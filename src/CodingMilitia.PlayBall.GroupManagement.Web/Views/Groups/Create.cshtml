@@ -1,0 +1,20 @@
+﻿@model GroupViewModel
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>title</title>
+</head>
+<body>
+<form asp-controller="Groups" asp-action="Create" method="post">
+    <label asp-for="Name">Name</label>
+    <input asp-for="Name" type="text" />
+    <button type="submit">Create</button>
+</form>
+</body>
+</html>
