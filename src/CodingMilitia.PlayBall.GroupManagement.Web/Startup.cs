@@ -26,6 +26,8 @@ namespace CodingMilitia.PlayBall.GroupManagement.Web
                 app.UseDeveloperExceptionPage();
             }
 
+            app.UseStaticFiles();
+
             app.Use(async (context, next) =>
             {
                 context.Response.OnStarting(() =>
@@ -33,17 +35,9 @@ namespace CodingMilitia.PlayBall.GroupManagement.Web
                     context.Response.Headers.Add("X-Powered-By", "ASP.net Code: From 0 to overkill");
                     return Task.CompletedTask;
                 });
-                if (!context.Request.Path.Value.EndsWith("1")) 
-                {
-                    await next.Invoke();    
-                }
+                await next.Invoke();    
             });
             app.UseMvc();
-            //app.UseMvcWithDefaultRoute();
-            /*app.Run(async (context) =>
-            {
-                await context.Response.WriteAsync("Hello World!");
-            })*/;
         }
     }
 }
