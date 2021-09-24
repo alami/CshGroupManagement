@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using CodingMilitia.PlayBall.GroupManagement.Web.Demo;
+using CodingMilitia.PlayBall.GroupManagement.Business.Impl.Services;
+using CodingMilitia.PlayBall.GroupManagement.Business.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -17,7 +18,7 @@ namespace CodingMilitia.PlayBall.GroupManagement.Web
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc(option => option.EnableEndpointRouting = false);
-            services.AddSingleton<IGroupIdGenerator, GroupIdGenerator>();
+            services.AddSingleton<IGroupsService, InMemoryGroupsService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -11,10 +11,11 @@
 </head>
 <body>
 <ul>
-      @foreach (var group in Model)
-      {
-          <li>@group.Name <a asp-controller="Groups" asp-action="Details" asp-route-id="@group.Id">Edit</a></li>
-      }
+    @foreach (var group in Model)
+    {
+        <li>@group.Name <a asp-controller="Groups" asp-action="Details" asp-route-id="@group.Id">Edit</a></li>
+    }
 </ul>
+<a asp-controller="Groups" asp-action="Create">Create</a>
 </body>
 </html>
