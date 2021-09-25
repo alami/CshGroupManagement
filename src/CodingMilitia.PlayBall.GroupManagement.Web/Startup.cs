@@ -35,6 +35,8 @@ namespace CodingMilitia.PlayBall.GroupManagement.Web
             //--injecting POCO but prettier
             services.ConfigurePOCO<SomeRootConfiguration>(_config.GetSection("SomeRoot")); 
             
+            services.ConfigurePOCO<DemoSecretsConfiguration>(_config.GetSection("DemoSecrets")); 
+            
             //--если использовать DI контейнер поумолчанию, раскомментировать
             //services.AddBusiness();
             

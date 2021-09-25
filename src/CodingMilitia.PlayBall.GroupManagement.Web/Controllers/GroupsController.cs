@@ -15,11 +15,13 @@ namespace CodingMilitia.PlayBall.GroupManagement.Web.Controllers
     {
         private readonly IGroupsService _groupsService;
         private readonly SomeRootConfiguration _config;
+        private readonly DemoSecretsConfiguration _secrets;
 
-        public GroupsController(IGroupsService groupsService, SomeRootConfiguration config)
+        public GroupsController(IGroupsService groupsService, SomeRootConfiguration config, DemoSecretsConfiguration secrets)
         {
             _groupsService = groupsService;
             _config = config;
+            _secrets = secrets;
         }        
         [HttpGet]
         [Route("")] //not needed because Index would be used as default anyway
