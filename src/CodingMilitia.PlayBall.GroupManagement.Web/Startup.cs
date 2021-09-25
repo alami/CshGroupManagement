@@ -2,20 +2,37 @@
 using System.Threading.Tasks;
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
+using CodingMilitia.PlayBall.GroupManagement.Web.Demo;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace CodingMilitia.PlayBall.GroupManagement.Web
 {
     public class Startup
     {
+        private readonly IConfiguration _config;
+        public Startup(IConfiguration config)
+        {
+            _config = config;
+//            var value =  _config.GetValue<int>("someRoot:someSubRoot:SomeKey");
+        }
         // This method gets called by the runtime. Use this method to add services to the container.
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public IServiceProvider ConfigureServices(IServiceCollection services)
         {
             services.AddMvc(option => option.EnableEndpointRouting = false);
-            //если использовать DI контейнер поумолчанию, раскомментировать
+            
+            //--using IOptions
+            //services.Configure<SomeSubRootConfiguration>(_config.GetSection("SomeRoot"));
+            
+            //--injecting POCO without IOptions
+            var someRootConfiguration = new SomeRootConfiguration();
+            _config.GetSection("SomeRoot").Bind(someRootConfiguration);
+            services.AddSingleton(someRootConfiguration);
+            
+            //--если использовать DI контейнер поумолчанию, раскомментировать
             //services.AddBusiness();
             
             //--add autofac
