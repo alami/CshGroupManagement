@@ -28,9 +28,12 @@ namespace CodingMilitia.PlayBall.GroupManagement.Web
             //services.Configure<SomeSubRootConfiguration>(_config.GetSection("SomeRoot"));
             
             //--injecting POCO without IOptions
-            var someRootConfiguration = new SomeRootConfiguration();
-            _config.GetSection("SomeRoot").Bind(someRootConfiguration);
-            services.AddSingleton(someRootConfiguration);
+            // var someRootConfiguration = new SomeRootConfiguration();
+            // _config.GetSection("SomeRoot").Bind(someRootConfiguration);
+            // services.AddSingleton(someRootConfiguration);
+
+            //--injecting POCO but prettier
+            services.ConfigurePOCO<SomeRootConfiguration>(_config.GetSection("SomeRoot")); 
             
             //--если использовать DI контейнер поумолчанию, раскомментировать
             //services.AddBusiness();
