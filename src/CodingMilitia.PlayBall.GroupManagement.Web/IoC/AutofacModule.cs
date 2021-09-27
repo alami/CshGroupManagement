@@ -27,14 +27,19 @@ namespace CodingMilitia.PlayBall.GroupManagement.Web.IoC
             }
             public IReadOnlyCollection<Group> GetAll()
             {
-                _logger.LogTrace("######## Helooo from {decoratedMethod} #########", nameof(GetAll));
-                return _inner.GetAll() ;
+                using (var scope = _logger.BeginScope("Decorator scope: (decorator)", nameof(GroupsServiceDecorator))) 
+                {
+                    _logger.LogTrace("######## Helooo from {decoratedMethod} #########", nameof(GetAll));
+                    return _inner.GetAll();
+                }
             }
 
             public Group GetById(long id)
             {
-                _logger.LogWarning($"######## Helooo from {nameof(GetById)} #########");
-                return _inner.GetById(id) ;
+                _logger.LogWarning("######## Helooo from {decorateMethod} #########",nameof(GetById));
+                var result = _inner.GetById(id) ;
+                _logger.LogWarning("######## GoodByeeee from {decorateMethod} #########",nameof(GetById));
+                return result;
             }
 
             public Group Update(Group group)
