@@ -42,16 +42,16 @@ namespace CodingMilitia.PlayBall.GroupManagement.Web
             };
             config.AddTarget(consoleTarget);
 
-            var fileTargget = new FileTarget("file")
-            {
-              FileName  = "${basedir}/file.log", 
-              Layout =   @"${date:format=HH\:mm\:ss} ${level} ${message} ${exception} ${ndcl}"
-            };
-            config.AddTarget(fileTargget);
+            // var fileTarget = new FileTarget("file")
+            // {
+            //   FileName  = "${basedir}/file.log", 
+            //   Layout =   @"${date:format=HH\:mm\:ss} ${level} ${message} ${exception} ${ndcl}"
+            // };
+            // config.AddTarget(fileTarget);
             
-            config.AddRule(LogLevel.Trace, LogLevel.Fatal, consoleTarget, "CodingMilitia.PlayBall.GroupManagement.Web.IoC.*");
+            config.AddRule(LogLevel.Trace, LogLevel.Fatal, consoleTarget, "CodingMilitia.*");
             config.AddRule(LogLevel.Info, LogLevel.Fatal, consoleTarget);
-            config.AddRule(LogLevel.Warn, LogLevel.Fatal, fileTargget);
+            // config.AddRule(LogLevel.Warn, LogLevel.Fatal, fileTarget);
             LogManager.Configuration = config;
         }
 
