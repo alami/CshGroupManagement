@@ -41,8 +41,17 @@ namespace CodingMilitia.PlayBall.GroupManagement.Web
                 Layout = @"${date:format=HH\:mm} ${level} ${message} ${exception}"
             };
             config.AddTarget(consoleTarget);
+
+            var fileTargget = new FileTarget("file")
+            {
+              FileName  = "${basedir}/file.log", 
+              Layout =   @"${date:format=HH\:mm\:ss} ${level} ${message} ${exception} ${ndcl}"
+            };
+            config.AddTarget(fileTargget);
+            
             config.AddRule(LogLevel.Trace, LogLevel.Fatal, consoleTarget, "CodingMilitia.PlayBall.GroupManagement.Web.IoC.*");
             config.AddRule(LogLevel.Info, LogLevel.Fatal, consoleTarget);
+            config.AddRule(LogLevel.Warn, LogLevel.Fatal, fileTargget);
             LogManager.Configuration = config;
         }
 
