@@ -40,6 +40,11 @@ namespace CodingMilitia.PlayBall.GroupManagement.Web
             app.UseMiddleware<RequestTimingAdHocMiddleware>();
             app.UseMiddleware<RequestTimingFactoryMiddleware>();
             
+            app.Map("/ping", builder =>
+            {
+                builder.Run(async (context) => { await context.Response.WriteAsync("pong"); });
+            });
+
             app.Use(async (context, next) =>
             {
                 context.Response.OnStarting(() =>
