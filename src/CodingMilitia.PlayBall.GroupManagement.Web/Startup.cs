@@ -40,8 +40,6 @@ namespace CodingMilitia.PlayBall.GroupManagement.Web
             app.UseMiddleware<RequestTimingAdHocMiddleware>();
             app.UseMiddleware<RequestTimingFactoryMiddleware>();
             
-            app.Run(async (context) => { await context.Response.WriteAsync("Helloooooo"); });
-            
             app.Use(async (context, next) =>
             {
                 context.Response.OnStarting(() =>
@@ -52,6 +50,8 @@ namespace CodingMilitia.PlayBall.GroupManagement.Web
                 await next.Invoke();    
             });
             app.UseMvc();
+            
+            app.Run(async (context) => { await context.Response.WriteAsync("No middlerware could handle the request"); });
         }
     }
 }
