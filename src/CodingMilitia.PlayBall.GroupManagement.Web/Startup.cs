@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using CodingMilitia.PlayBall.GroupManagement.Web.Demo.Middlewares;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -38,6 +39,8 @@ namespace CodingMilitia.PlayBall.GroupManagement.Web
 
             app.UseMiddleware<RequestTimingAdHocMiddleware>();
             app.UseMiddleware<RequestTimingFactoryMiddleware>();
+            
+            app.Run(async (context) => { await context.Response.WriteAsync("Helloooooo"); });
             
             app.Use(async (context, next) =>
             {
