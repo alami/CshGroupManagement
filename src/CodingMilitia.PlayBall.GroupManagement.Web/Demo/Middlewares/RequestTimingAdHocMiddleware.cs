@@ -20,7 +20,7 @@ namespace CodingMilitia.PlayBall.GroupManagement.Web.Demo.Middlewares
             await _next(context);
             watch.Stop();
             Interlocked.Increment(ref _requestCounter);
-            logger.LogWarning("Request {_requestNumber} took {requstTime}ms",
+            logger.LogWarning("RequestTimingAdHocMiddleware: Request {_requestNumber} took {requstTime}ms",
                 _requestCounter, watch.ElapsedMilliseconds);
             
         }

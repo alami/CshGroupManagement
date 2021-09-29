@@ -21,7 +21,7 @@ namespace CodingMilitia.PlayBall.GroupManagement.Web
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc(option => option.EnableEndpointRouting = false);
-            
+            services.AddTransient<RequestTimingFactoryMiddleware>();
             //--если использовать DI контейнер поумолчанию, раскомментировать
             services.AddBusiness();
         }
@@ -37,6 +37,7 @@ namespace CodingMilitia.PlayBall.GroupManagement.Web
             app.UseStaticFiles();
 
             app.UseMiddleware<RequestTimingAdHocMiddleware>();
+            app.UseMiddleware<RequestTimingFactoryMiddleware>();
             
             app.Use(async (context, next) =>
             {
