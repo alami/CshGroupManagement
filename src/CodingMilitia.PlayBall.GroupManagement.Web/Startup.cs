@@ -37,13 +37,19 @@ namespace CodingMilitia.PlayBall.GroupManagement.Web
 
             app.UseStaticFiles();
 
-            app.UseMiddleware<RequestTimingAdHocMiddleware>();
-            app.UseMiddleware<RequestTimingFactoryMiddleware>();
-            
             app.Map("/ping", builder =>
             {
+                builder.UseMiddleware<RequestTimingFactoryMiddleware>();
                 builder.Run(async (context) => { await context.Response.WriteAsync("pong"); });
             });
+            
+            app.MapWhen(
+                context => context.Request.Headers.ContainsKey("ping"), 
+                builder =>
+                    {
+                        builder.UseMiddleware<RequestTimingAdHocMiddleware>();
+                        builder.Run(async (context) => { await context.Response.WriteAsync("pong from header"); });
+                    });
 
             app.Use(async (context, next) =>
             {
