@@ -26,7 +26,7 @@ namespace CodingMilitia.PlayBall.GroupManagement.Web
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
                 .ConfigureLogging(builder =>
-                {
+                { 
                     builder.ClearProviders(); //--тк.чистить всех провадеров , то надо добавить
                     builder.SetMinimumLevel(Microsoft.Extensions.Logging.LogLevel.Trace);
                 })

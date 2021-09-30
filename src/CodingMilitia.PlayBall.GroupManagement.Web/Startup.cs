@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using CodingMilitia.PlayBall.GroupManagement.Web.Demo.Middlewares;
+using CodingMilitia.PlayBall.GroupManagement.Web.Filters;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -21,10 +22,14 @@ namespace CodingMilitia.PlayBall.GroupManagement.Web
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc(option => option.EnableEndpointRouting = false);
+            services.AddMvc(option =>
+            {
+                option.EnableEndpointRouting = false;  //[ <---- МОЯ РЕДАКЦИЯ: иначе не запускается]
+                option.Filters.Add<DemoActionFilter>();
+            });
             services.AddTransient<RequestTimingFactoryMiddleware>();
             //--если использовать DI контейнер поумолчанию, раскомментировать
-            services.AddBusiness();
+            services.AddBusiness(); 
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
