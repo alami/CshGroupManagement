@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using CodingMilitia.PlayBall.GroupManagement.Business.Services;
 using CodingMilitia.PlayBall.GroupManagement.Web.Filters;
@@ -10,6 +11,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace CodingMilitia.PlayBall.GroupManagement.Web.Controllers
 {
+    [ServiceFilter(typeof(DemoExceptionFilter))]
     [Route("groups")] 
     public class GroupsController : Controller
     {
@@ -23,6 +25,7 @@ namespace CodingMilitia.PlayBall.GroupManagement.Web.Controllers
         [Route("")] //not needed because Index would be used as default anyway
         public IActionResult Index()
         {
+            throw new ArgumentException("Booom!");
             return View(_groupsService.GetAll().ToViewModel());
         }
         

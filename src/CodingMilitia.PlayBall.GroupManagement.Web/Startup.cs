@@ -28,6 +28,8 @@ namespace CodingMilitia.PlayBall.GroupManagement.Web
                 option.Filters.Add<DemoActionFilter>();
             });
             services.AddTransient<RequestTimingFactoryMiddleware>();
+            services.AddTransient<DemoExceptionFilter>();
+            
             //--если использовать DI контейнер поумолчанию, раскомментировать
             services.AddBusiness(); 
         }
