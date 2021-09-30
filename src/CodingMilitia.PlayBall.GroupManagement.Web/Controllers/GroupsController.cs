@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using CodingMilitia.PlayBall.GroupManagement.Business.Services;
+using CodingMilitia.PlayBall.GroupManagement.Web.Filters;
 using CodingMilitia.PlayBall.GroupManagement.Web.Mappings;
 using CodingMilitia.PlayBall.GroupManagement.Web.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -36,6 +37,7 @@ namespace CodingMilitia.PlayBall.GroupManagement.Web.Controllers
             }
             return View(group.ToViewModel());
         }
+        [DemoActionFilter]
         [HttpPost]
         [Route("{id}")]
         [ValidateAntiForgeryToken]
@@ -54,6 +56,7 @@ namespace CodingMilitia.PlayBall.GroupManagement.Web.Controllers
         {
             return View();
         }
+        [DemoActionFilter]
         [HttpPost]
         [Route("create")]
         [ValidateAntiForgeryToken]
