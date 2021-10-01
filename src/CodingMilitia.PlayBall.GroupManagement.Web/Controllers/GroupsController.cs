@@ -11,7 +11,8 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace CodingMilitia.PlayBall.GroupManagement.Web.Controllers
 {
-    [ServiceFilter(typeof(DemoExceptionFilter))]
+    // [ServiceFilter(typeof(DemoExceptionFilter))]
+    [DemoExceptionFilterFactoryAttribute]
     [Route("groups")] 
     public class GroupsController : Controller
     {

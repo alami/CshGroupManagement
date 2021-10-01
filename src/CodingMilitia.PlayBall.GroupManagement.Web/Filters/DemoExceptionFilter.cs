@@ -12,11 +12,13 @@ namespace CodingMilitia.PlayBall.GroupManagement.Web.Filters
         {
             _logger = logger;
         }
+
+        public string Suffix { get; set; } = "by ServiceFilterAttribute";
         public void OnException(ExceptionContext context)
         {
             if (context.Exception is ArgumentException)
             {
-                _logger.LogError("Transforming ArgumentException in 400");
+                _logger.LogError("Transforming ArgumentException in 400 {suffix}", Suffix);
                 context.Result = new BadRequestResult();
             }
         }
