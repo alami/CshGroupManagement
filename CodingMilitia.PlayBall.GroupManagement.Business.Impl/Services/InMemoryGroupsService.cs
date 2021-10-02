@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using CodingMilitia.PlayBall.GroupManagement.Business.Models;
 using CodingMilitia.PlayBall.GroupManagement.Business.Services;
 
@@ -9,17 +10,17 @@ namespace CodingMilitia.PlayBall.GroupManagement.Business.Impl.Services
     {
         private readonly List<Group> _groups = new List<Group>();
         private long _currentId = 0;
-        public IReadOnlyCollection<Group> GetAll()
+        public Task<IReadOnlyCollection<Group>> GetAllAsync()
         {
-            return _groups.AsReadOnly();
+            return Task.FromResult<IReadOnlyCollection<Group>>(_groups.AsReadOnly());
         }
 
-        public Group GetById(long id)
+        public Task<Group> GetByIdAsync(long id)
         {
-            return _groups.SingleOrDefault(g => g.Id == id);
+            return Task.FromResult(_groups.SingleOrDefault(g => g.Id == id));
         }
 
-        public Group Update(Group group)
+        public Task<Group> UpdateAsync(Group group)
         {
             var toUpdate = _groups.SingleOrDefault(g => g.Id == group.Id);
             if (toUpdate == null)
@@ -28,14 +29,14 @@ namespace CodingMilitia.PlayBall.GroupManagement.Business.Impl.Services
             }
 
             toUpdate.Name = group.Name;
-            return toUpdate;
+            return Task.FromResult(toUpdate);
         }
 
-        public Group Add(Group group)
+        public Task<Group> AddAsync(Group group)
         {
             group.Id = ++_currentId;
             _groups.Add(group);
-            return group;
+            return Task.FromResult(group);
         }
     }
 }

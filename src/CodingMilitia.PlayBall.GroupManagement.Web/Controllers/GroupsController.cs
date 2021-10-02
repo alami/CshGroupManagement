@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using CodingMilitia.PlayBall.GroupManagement.Business.Services;
 using CodingMilitia.PlayBall.GroupManagement.Web.Filters;
 using CodingMilitia.PlayBall.GroupManagement.Web.Mappings;
@@ -24,17 +25,17 @@ namespace CodingMilitia.PlayBall.GroupManagement.Web.Controllers
         }        
         [HttpGet]
         [Route("")] //not needed because Index would be used as default anyway
-        public IActionResult Index()
+        public async Task<IActionResult> IndexAsync()
         {
-            throw new ArgumentException("Booom!");
-            return View(_groupsService.GetAll().ToViewModel());
+            var result = await _groupsService.GetAllAsync();
+            return View(result.ToViewModel());
         }
         
         [HttpGet]
         [Route("{id}")]
-        public IActionResult Details(long id)
+        public async Task<IActionResult> DetailsAsync(long id)
         {
-            var group = _groupsService.GetById(id);
+            var group = await _groupsService.GetByIdAsync(id);
             if (group == null)
             {
                 return NotFound();
@@ -45,9 +46,9 @@ namespace CodingMilitia.PlayBall.GroupManagement.Web.Controllers
         [HttpPost]
         [Route("{id}")]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(long id, GroupViewModel model)
+        public async Task<IActionResult> EditAsync(long id, GroupViewModel model)
         {
-            var group = _groupsService.Update(model.ToServiceModel());
+            var group = await _groupsService.UpdateAsync(model.ToServiceModel());
             if (group == null)
             {
                 return NotFound();
@@ -64,9 +65,9 @@ namespace CodingMilitia.PlayBall.GroupManagement.Web.Controllers
         [HttpPost]
         [Route("create")]
         [ValidateAntiForgeryToken]
-        public IActionResult Create(GroupViewModel model)
+        public async Task<IActionResult> CreateReallyAsync(GroupViewModel model)
         {
-            _groupsService.Add(model.ToServiceModel());
+            await _groupsService.AddAsync(model.ToServiceModel());
             
             return RedirectToAction("Index");
         }
