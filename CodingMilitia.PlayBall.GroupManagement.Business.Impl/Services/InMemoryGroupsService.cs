@@ -12,19 +12,21 @@ namespace CodingMilitia.PlayBall.GroupManagement.Business.Impl.Services
     {
         private readonly List<Group> _groups = new List<Group>();
         private long _currentId = 0;
-        public async Task<IReadOnlyCollection<Group>> GetAllAsync(CancellationToken ct)
+        public Task<IReadOnlyCollection<Group>> GetAllAsync(CancellationToken ct)
         {
-            await Task.Delay(100);
-            throw new NotImplementedException();
-            //return Task.FromResult<IReadOnlyCollection<Group>>(_groups.AsReadOnly());
+            return Task.FromResult<IReadOnlyCollection<Group>>(_groups.AsReadOnly());
         }
 
         public async Task<Group> GetByIdAsync(long id,  CancellationToken ct)
         {
-            await Task.Delay(5000, ct);
-            // await Task.Delay(5000);
-            // ct.ThrowIfCancellationRequested();
-            return _groups.SingleOrDefault(g => g.Id == id);
+            try
+            {
+                return await InnerGetByIdAsync(id, ct);
+            }
+            catch (Exception e)
+            {
+                return null;
+            }
         }
 
         public Task<Group> UpdateAsync(Group group,  CancellationToken ct)
@@ -44,6 +46,12 @@ namespace CodingMilitia.PlayBall.GroupManagement.Business.Impl.Services
             group.Id = ++_currentId;
             _groups.Add(group);
             return Task.FromResult(group);
+        }
+        public async Task<Group> InnerGetByIdAsync(long id,  CancellationToken ct)
+        {
+            await Task.Delay(5000, ct);
+            throw new NotImplementedException();
+            return _groups.SingleOrDefault(g => g.Id == id);
         }
     }
 }

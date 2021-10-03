@@ -20,46 +20,16 @@ namespace CodingMilitia.PlayBall.GroupManagement.Web.Controllers
     public class GroupsController : Controller
     {
         private readonly IGroupsService _groupsService;
-        private readonly ILogger<GroupsController> _logger;
-
-        public GroupsController(IGroupsService groupsService, ILogger<GroupsController> logger)
+        public GroupsController(IGroupsService groupsService)
         {
             _groupsService = groupsService;
-            _logger = logger;
         }        
-        // [HttpGet]
-        // [Route("")] //not needed because Index would be used as default anyway
-        // public async Task<IActionResult> IndexAsync(CancellationToken ct)
-        // {
-        //     var result = await _groupsService.GetAllAsync(ct);
-        //     return View(result.ToViewModel());
-        // }
-        
         [HttpGet]
         [Route("")] //not needed because Index would be used as default anyway
-        public IActionResult IndexAsync()
+        public async Task<IActionResult> IndexAsync(CancellationToken ct)
         {
-            try
-            {
-                var result = _groupsService.GetAllAsync(CancellationToken.None).GetAwaiter().GetResult();
-                // var result = _groupsService.GetAllAsync(CancellationToken.None).Result;
-                return View(result.ToViewModel());
-            }
-            catch (NotImplementedException nex)
-            {
-                _logger.LogError(nex, "Not Implemented");
-                return Content("Not Implemented");
-            }
-            catch (AggregateException aex)
-            {
-                _logger.LogError(aex, "Aggregate Exception");
-                return Content("Aggregate Exception");
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "Exception type {exType}",ex.GetType());
-                return Content("Kaaboom");
-            }
+            var result = await _groupsService.GetAllAsync(ct);
+            return View(result.ToViewModel());
         }
 
         [HttpGet]
