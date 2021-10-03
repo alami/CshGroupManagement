@@ -10,6 +10,7 @@ namespace CodingMilitia.PlayBall.GroupManagement.Business.Impl.Services
 {
     public class InMemoryGroupsService : IGroupsService
     {
+        private static readonly Random RandomGenerator = new Random();
         private readonly List<Group> _groups = new List<Group>();
         private long _currentId = 0;
         public Task<IReadOnlyCollection<Group>> GetAllAsync(CancellationToken ct)
@@ -19,14 +20,11 @@ namespace CodingMilitia.PlayBall.GroupManagement.Business.Impl.Services
 
         public async Task<Group> GetByIdAsync(long id,  CancellationToken ct)
         {
-            try
-            {
-                return await InnerGetByIdAsync(id, ct);
-            }
-            catch (Exception e)
-            {
-                return null;
-            }
+            await Task.Delay(1000, ct);
+            var extResult1Task = CallExternalServiceAsync(1, ct);
+            var extResult2Task = CallExternalServiceAsync(2, ct);
+            await Task.WhenAny (extResult1Task,extResult2Task);
+            return _groups.SingleOrDefault(g => g.Id == id);
         }
 
         public Task<Group> UpdateAsync(Group group,  CancellationToken ct)
@@ -47,11 +45,11 @@ namespace CodingMilitia.PlayBall.GroupManagement.Business.Impl.Services
             _groups.Add(group);
             return Task.FromResult(group);
         }
-        public async Task<Group> InnerGetByIdAsync(long id,  CancellationToken ct)
+
+        private async Task<int> CallExternalServiceAsync(int multiplier,CancellationToken ct)
         {
-            await Task.Delay(5000, ct);
-            throw new NotImplementedException();
-            return _groups.SingleOrDefault(g => g.Id == id);
+            await Task.Delay(1000*multiplier);
+            return RandomGenerator.Next();
         }
     }
 }
