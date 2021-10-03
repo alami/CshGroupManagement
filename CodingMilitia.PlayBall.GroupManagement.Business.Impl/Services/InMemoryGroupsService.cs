@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -11,9 +12,11 @@ namespace CodingMilitia.PlayBall.GroupManagement.Business.Impl.Services
     {
         private readonly List<Group> _groups = new List<Group>();
         private long _currentId = 0;
-        public Task<IReadOnlyCollection<Group>> GetAllAsync(CancellationToken ct)
+        public async Task<IReadOnlyCollection<Group>> GetAllAsync(CancellationToken ct)
         {
-            return Task.FromResult<IReadOnlyCollection<Group>>(_groups.AsReadOnly());
+            await Task.Delay(100);
+            throw new NotImplementedException();
+            //return Task.FromResult<IReadOnlyCollection<Group>>(_groups.AsReadOnly());
         }
 
         public async Task<Group> GetByIdAsync(long id,  CancellationToken ct)
