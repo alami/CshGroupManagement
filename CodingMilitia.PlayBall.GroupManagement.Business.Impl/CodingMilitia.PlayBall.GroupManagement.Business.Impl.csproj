@@ -8,6 +8,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\src\CodingMilitia.PlayBall.GroupManagement.Business\CodingMilitia.PlayBall.GroupManagement.Business.csproj" />
+      <ProjectReference Include="..\src\CodingMilitia.PlayBall.GroupManagement.Data\CodingMilitia.PlayBall.GroupManagement.Data.csproj" />
     </ItemGroup>
 
 </Project>

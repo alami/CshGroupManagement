@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Threading.Tasks;
+using CodingMilitia.PlayBall.GroupManagement.Data;
 using CodingMilitia.PlayBall.GroupManagement.Web.Demo.Middlewares;
 using CodingMilitia.PlayBall.GroupManagement.Web.Filters;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -16,7 +18,6 @@ namespace CodingMilitia.PlayBall.GroupManagement.Web
         public Startup(IConfiguration config)
         {
             _config = config;
-//            var value =  _config.GetValue<int>("someRoot:someSubRoot:SomeKey");
         }
         // This method gets called by the runtime. Use this method to add services to the container.
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
@@ -25,12 +26,15 @@ namespace CodingMilitia.PlayBall.GroupManagement.Web
             services.AddMvc(option =>
             {
                 option.EnableEndpointRouting = false;  //[ <---- МОЯ РЕДАКЦИЯ: иначе не запускается]
-                option.Filters.Add<DemoActionFilter>();
             });
-            services.AddTransient<RequestTimingFactoryMiddleware>();
+
+            services.AddDbContext<GroupManagementDbContext>(option =>
+            {
+                option.UseNpgsql("Server=localhost;Port=54331;Username=postgres;Password=postgres;Database=GroupManagement");
+                // option.UseNpgsql(_config.GetConnectionString("GroupManagementDbContext"));
+            });
             services.AddTransient<DemoExceptionFilter>();
             
-            //--если использовать DI контейнер поумолчанию, раскомментировать
             services.AddBusiness(); 
         }
 
@@ -43,21 +47,7 @@ namespace CodingMilitia.PlayBall.GroupManagement.Web
             }
 
             app.UseStaticFiles();
-
-            app.Map("/ping", builder =>
-            {
-                builder.UseMiddleware<RequestTimingFactoryMiddleware>();
-                builder.Run(async (context) => { await context.Response.WriteAsync("pong"); });
-            });
             
-            app.MapWhen(
-                context => context.Request.Headers.ContainsKey("ping"), 
-                builder =>
-                    {
-                        builder.UseMiddleware<RequestTimingAdHocMiddleware>();
-                        builder.Run(async (context) => { await context.Response.WriteAsync("pong from header"); });
-                    });
-
             app.Use(async (context, next) =>
             {
                 context.Response.OnStarting(() =>
