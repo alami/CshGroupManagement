@@ -21,7 +21,7 @@ namespace CodingMilitia.PlayBall.GroupManagement.Business.Impl.Services
         }
         public async Task<IReadOnlyCollection<Group>> GetAllAsync(CancellationToken ct)
         {
-            var groups = await _context.Groups.ToListAsync(ct);
+            var groups = await _context.Groups.OrderBy(g=>g.Id).ToListAsync(ct);
             return groups.ToService();
         }
 
@@ -34,10 +34,29 @@ namespace CodingMilitia.PlayBall.GroupManagement.Business.Impl.Services
 
         public async Task<Group> UpdateAsync(Group group, CancellationToken ct)
         {
+            return await SimplestUpdateAsync(group, ct); 
+        }
+
+        private async Task<Group> SimplestUpdateAsync(Group group, CancellationToken ct)
+        {
             var updateGroupEntry = _context.Groups.Update(group.ToEntity());
             await _context.SaveChangesAsync(ct);
             return updateGroupEntry.Entity.ToService();
-        }
+        } 
+        private async Task<Group> UpdateWithFetchAsync(Group group, CancellationToken ct)
+        {
+            var existingGroup = await _context.Groups.SingleOrDefaultAsync(g=>g.Id==group.Id,ct);
+            existingGroup.Name = group.Name;
+            await _context.SaveChangesAsync(ct);
+            return existingGroup. ToService();
+        } 
+        private async Task<Group> UpdateWithFetch2Async(Group group, CancellationToken ct)
+        {
+            var existingGroup = await _context.Groups.SingleOrDefaultAsync(g=>g.Id==group.Id,ct);
+            _context.Entry(existingGroup).CurrentValues.SetValues(group.ToEntity());
+            await _context.SaveChangesAsync(ct);
+            return existingGroup. ToService();
+        } 
 
         public async Task<Group> AddAsync(Group group, CancellationToken ct)
         {
