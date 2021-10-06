@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace CodingMilitia.PlayBall.GroupManagement.Web.Controllers
 {
+    [ApiController]
     [Route("groups")] 
     public class GroupsController : ControllerBase
     {
@@ -43,11 +44,11 @@ namespace CodingMilitia.PlayBall.GroupManagement.Web.Controllers
         }
         [HttpPost]
         [HttpPut]
-        [Route("create")]
+        [Route("")]
         public async Task<IActionResult> AddAsync(GroupModel model, CancellationToken ct)
         {
             var group = await _groupsService.AddAsync(model.ToServiceModel(),ct);
-            return CreatedAtAction(nameof(GetByIdAsync), new { id=group.Id }, group);
+            return Ok(group.ToModel());//CreatedAtAction(nameof(GetByIdAsync), new { id=group.Id }, group);
         }
     }
 } 
