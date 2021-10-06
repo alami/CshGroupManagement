@@ -39,6 +39,7 @@ namespace CodingMilitia.PlayBall.GroupManagement.Web.Controllers
         [Route("{id}")]
         public async Task<IActionResult> UpdateAsync(long id, GroupModel model, CancellationToken ct)
         {
+            model.Id = id;
             var group = await _groupsService.UpdateAsync(model.ToServiceModel(),ct);
             return Ok(group.ToModel());
         }
@@ -46,6 +47,7 @@ namespace CodingMilitia.PlayBall.GroupManagement.Web.Controllers
         [Route("")]
         public async Task<IActionResult> AddAsync(GroupModel model, CancellationToken ct)
         {
+            model.Id = 0;
             var group = await _groupsService.AddAsync(model.ToServiceModel(),ct);
             return Ok(group.ToModel());//CreatedAtAction(nameof(GetByIdAsync), new { id=group.Id }, group);
         }

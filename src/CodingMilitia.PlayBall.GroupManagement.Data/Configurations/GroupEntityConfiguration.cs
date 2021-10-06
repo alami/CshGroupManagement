@@ -12,6 +12,7 @@ namespace CodingMilitia.PlayBall.GroupManagement.Data.Configurations
             builder
                 .Property(e => e.Id);
                 //.UseNpgsqlSerialColumn();
+                //.UseNpgsqlIdentitySerialColumn();
         }
     }
 }
