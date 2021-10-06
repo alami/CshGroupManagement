@@ -8,7 +8,7 @@ namespace CodingMilitia.PlayBall.GroupManagement.Web.Filters
         public override void OnActionExecuting(ActionExecutingContext context)
         {
             if (context.ActionArguments.TryGetValue("model", out var model)
-                && model is GroupViewModel group && group.Id == 0)
+                && model is GroupModel group && group.Id == 0)
             {
                 group.Name += $" ( Added on {nameof(DemoActionFilterAttribute)}";
             }
