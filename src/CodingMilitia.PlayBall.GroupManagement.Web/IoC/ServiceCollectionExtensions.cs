@@ -8,6 +8,15 @@ namespace Microsoft.Extensions.DependencyInjection
 {
     public static class ServiceCollectionExtensions
     {
+        public static IServiceCollection AddRequiredMvcComponents(this IServiceCollection services)
+        {
+            var mvcBilder = services.AddMvcCore(option =>
+            {
+                option.EnableEndpointRouting = false;  //[ <---- МОЯ РЕДАКЦИЯ: иначе не запускается]
+            });
+            // mvcBilder.AddJsonFormatters();
+            return services;
+        }
         public static IServiceCollection AddBusiness(this IServiceCollection services)
         {
             // services.AddSingleton<IGroupsService, InMemoryGroupsService>();

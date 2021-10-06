@@ -23,11 +23,7 @@ namespace CodingMilitia.PlayBall.GroupManagement.Web
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc(option =>
-            {
-                option.EnableEndpointRouting = false;  //[ <---- МОЯ РЕДАКЦИЯ: иначе не запускается]
-            });
-
+            services.AddRequiredMvcComponents();
             services.AddDbContext<GroupManagementDbContext>(option =>
             {
                 option.UseNpgsql("Server=localhost;Port=54331;Username=postgres;Password=postgres;Database=GroupManagement");
