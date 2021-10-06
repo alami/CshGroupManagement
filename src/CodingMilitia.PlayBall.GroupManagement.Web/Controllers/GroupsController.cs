@@ -43,7 +43,6 @@ namespace CodingMilitia.PlayBall.GroupManagement.Web.Controllers
             return Ok(group.ToModel());
         }
         [HttpPost]
-        [HttpPut]
         [Route("")]
         public async Task<IActionResult> AddAsync(GroupModel model, CancellationToken ct)
         {

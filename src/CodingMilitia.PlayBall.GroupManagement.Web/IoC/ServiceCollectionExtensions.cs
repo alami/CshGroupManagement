@@ -1,6 +1,7 @@
 ﻿using System;
 using CodingMilitia.PlayBall.GroupManagement.Business.Impl.Services;
 using CodingMilitia.PlayBall.GroupManagement.Business.Services;
+using CodingMilitia.PlayBall.GroupManagement.Data.Filters;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -10,9 +11,11 @@ namespace Microsoft.Extensions.DependencyInjection
     {
         public static IServiceCollection AddRequiredMvcComponents(this IServiceCollection services)
         {
+            services.AddTransient<ApiExceptionFilter>();
             var mvcBilder = services.AddMvcCore(option =>
             {
                 option.EnableEndpointRouting = false;  //[ <---- МОЯ РЕДАКЦИЯ: иначе не запускается]
+                option.Filters.AddService<ApiExceptionFilter>();
             });
             // mvcBilder.AddJsonFormatters();
             return services;

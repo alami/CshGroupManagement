@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -34,6 +35,7 @@ namespace CodingMilitia.PlayBall.GroupManagement.Business.Impl.Services
 
         public async Task<Group> UpdateAsync(Group group, CancellationToken ct)
         {
+            // throw new DbUpdateException();
             var updateGroupEntry = _context.Groups.Update(group.ToEntity());
             await _context.SaveChangesAsync(ct);
             return updateGroupEntry.Entity.ToService();
