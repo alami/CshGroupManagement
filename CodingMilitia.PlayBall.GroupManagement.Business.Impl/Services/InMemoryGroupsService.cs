@@ -46,6 +46,11 @@ namespace CodingMilitia.PlayBall.GroupManagement.Business.Impl.Services
             return Task.FromResult(group);
         }
 
+        public Task RemoveAsync(long id, CancellationToken ct)
+        {
+            throw new NotImplementedException();
+        }
+
         private async Task<int> CallExternalServiceAsync(int multiplier,CancellationToken ct)
         {
             await Task.Delay(1000*multiplier);

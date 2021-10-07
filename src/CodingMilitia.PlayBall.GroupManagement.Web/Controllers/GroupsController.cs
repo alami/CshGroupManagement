@@ -51,5 +51,12 @@ namespace CodingMilitia.PlayBall.GroupManagement.Web.Controllers
             var group = await _groupsService.AddAsync(model.ToServiceModel(),ct);
             return Ok(group.ToModel());//CreatedAtAction(nameof(GetByIdAsync), new { id=group.Id }, group);
         }
+        [HttpDelete]
+        [Route("{id}")]
+        public async Task<IActionResult> RemoveAsync(long id, CancellationToken ct)
+        {
+            await _groupsService.RemoveAsync(id,ct);
+            return NoContent() ;
+        }
     }
 } 
