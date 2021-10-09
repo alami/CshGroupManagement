@@ -49,6 +49,7 @@ namespace CodingMilitia.PlayBall.GroupManagement.Web
                 context.Response.OnStarting(() =>
                 {
                     context.Response.Headers.Add("X-Powered-By", "ASP.net Code: From 0 to overkill");
+                    context.Response.Headers.Add("Access-Control-Allow-Origin", "*");
                     return Task.CompletedTask;
                 });
                 await next.Invoke();    
