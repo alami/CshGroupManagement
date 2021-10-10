@@ -58,5 +58,11 @@ namespace CodingMilitia.PlayBall.GroupManagement.Web.Controllers
             await _groupsService.RemoveAsync(id,ct);
             return NoContent() ;
         }
+        [HttpOptions]
+        [Route("{id}")]
+        public async Task<IActionResult> OptionsAsync(long id, CancellationToken ct)
+        {
+            return Ok() ;
+        }
     }
 } 
